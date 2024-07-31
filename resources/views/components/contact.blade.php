@@ -5,8 +5,8 @@
     <table class="table table-striped">
         <thead>
             <tr>
-
-                <th>Name</th>
+                <th><a href="{{ route('contacts.index', ['sort' => 'name']) }}">Name</a></th>
+                    <th><a href="{{ route('contacts.index', ['sort' => 'created_at']) }}">Created At</a></th>
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Address</th>
@@ -18,13 +18,18 @@
             @foreach ($contacts as $contact)
             <tr >
                 <td>{{  $contact->name}}</td>
+                <td>{{ $contact->created_at }}</td>
                 <td>{{  $contact->email}}</td>
                 <td>{{  $contact->phone}}</td>
                 <td>{{  $contact->address}}</td>
                 <td>
-                    <a href="{{ route('contacts.show', $contact->id)}}" class="btn btn-info">View</a>
-                    <a href="#" class="btn btn-warning">Edit</a>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <a href="{{ route('contacts.show', $contact->id) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-warning">Edit</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
            
