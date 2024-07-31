@@ -13,8 +13,23 @@ class ContactController extends Controller
     public function index(Request $request)
     {
 
-        $sort = $request->get('sort', 'created_at');
-        $contacts = Contact::orderBy($sort)->get();
+        $query = Contact::query();
+
+        // Searching
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%'.$request->search.'%')
+                  ->orWhere('email', 'like', '%'.$request->search.'%');
+        }
+
+        // Sorting
+        if ($request->has('sort')) {
+            $query->orderBy($request->sort, $request->direction ?? 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $contacts = $query->get();
+
         return view('contacts.index', compact('contacts'));
     }
 
