@@ -22,7 +22,7 @@
                 <td>{{  $contact->phone}}</td>
                 <td>{{  $contact->address}}</td>
                 <td>
-                    <a href="#" class="btn btn-info">View</a>
+                    <a href="{{ route('contacts.show', $contact->id)}}" class="btn btn-info">View</a>
                     <a href="#" class="btn btn-warning">Edit</a>
                     <button type="button" class="btn btn-danger">Delete</button>
                 </td>
